@@ -23,9 +23,9 @@ public class tassert {
     public static int calculateTassert(String filePath) throws IOException {
         // Liste des méthodes d'assertion couramment utilisées dans JUnit
         String[] assertionMethods = {
-                "assertEquals", "assertFalse", "assertThrows", "fail",
+                "assertEquals", "assertNotEquals", "assertFalse", "assertThrows", "fail",
                 "assertTrue", "assertNotNull", "assertNull", "assertSame",
-                "assertNotSame", "assertArrayEquals", "assertNotEquals"
+                "assertNotSame", "assertArrayEquals"
         };
 
         Pattern pattern = Pattern.compile("\\b(" + String.join("|", assertionMethods) + ")\\b");
