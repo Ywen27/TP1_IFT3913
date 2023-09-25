@@ -5,7 +5,7 @@ public class tls {
 
     public static void main(String[] args) throws Exception {
         if (args.length < 1) {
-            System.out.println("Usage: java Tls [-o output_file.csv] <path_to_test_directory>");
+            System.out.println("Usage: java tls -o <output.csv> <path_to_test_directory> or java tls <path_to_test_directory");
             System.exit(1);
         }
 

@@ -6,7 +6,7 @@ public class tloc {
 
     public static void main(String[] args) {
         if (args.length != 1) {
-            System.out.println("Usage: java Tloc <path_to_java_file>");
+            System.out.println("Usage: java tloc <path_to_java_file>");
             System.exit(1);
         }
 

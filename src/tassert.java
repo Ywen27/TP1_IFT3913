@@ -7,7 +7,7 @@ public class tassert {
 
     public static void main(String[] args) {
         if (args.length != 1) {
-            System.out.println("Usage: java Tassert <path_to_java_file>");
+            System.out.println("Usage: java tassert <path_to_java_file>");
             System.exit(1);
         }
 
