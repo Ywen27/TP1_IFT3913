@@ -26,14 +26,14 @@ public class tls {
         }
     }
 
-    private static void processDirectory(Path startPath, PrintStream output) throws Exception {
+    public static void processDirectory(Path startPath, PrintStream output) throws Exception {
         Files.walk(startPath)
                 .filter(Files::isRegularFile)
                 .filter(p -> p.toString().endsWith(".java"))
                 .forEach(p -> processJavaFile(startPath, p, output));
     }
 
-    private static void processJavaFile(Path startPath, Path path, PrintStream output) {
+    public static void processJavaFile(Path startPath, Path path, PrintStream output) {
         String relativePath = ".\\" + startPath.relativize(path).toString();
         String className = path.getFileName().toString().replace(".java", "");
         String packageName = computePackageName(startPath, path);
@@ -59,7 +59,7 @@ public class tls {
                 relativePath, packageName, className, tlocValue, tassertValue, tcmp);
     }
 
-    private static String computePackageName(Path startPath, Path file) {
+    public static String computePackageName(Path startPath, Path file) {
         Path relativePath = startPath.relativize(file);
         Path parent = relativePath.getParent();
         if (parent == null) {
