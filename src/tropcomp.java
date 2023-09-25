@@ -21,7 +21,16 @@ public class tropcomp {
         }
         String projectPath = args[inputIndex];
         double threshold = Double.parseDouble(args[inputIndex + 1]);
+        
+        try (PrintStream output = (outputPath != null) ? new PrintStream(new FileOutputStream(outputPath)) : System.out) {
+            processProject(Paths.get(projectPath), threshold, output);
+        }
 	};
+	
+	private static void processProject(Path projectPath, double threshold, PrintStream output) throws Exception {
+		List<ClassMetrics> metricsList = new ArrayList<>();
+    }
+	
 	
 	private static class ClassMetrics {
         private final Path path;
