@@ -25,7 +25,7 @@ public class tassert {
         String[] assertionMethods = {
                 "assertEquals", "assertNotEquals", "assertFalse", "assertThrows", "fail",
                 "assertTrue", "assertNotNull", "assertNull", "assertSame",
-                "assertNotSame", "assertArrayEquals"
+                "assertNotSame", "assertArrayEquals", "assertThat"
         };
 
         Pattern pattern = Pattern.compile("\\b(" + String.join("|", assertionMethods) + ")\\b");
