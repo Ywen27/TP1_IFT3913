@@ -29,8 +29,42 @@ public class tropcomp {
 	
 	private static void processProject(Path projectPath, double threshold, PrintStream output) throws Exception {
 		List<ClassMetrics> metricsList = new ArrayList<>();
+		
+		// Gather metrics for all test files
+        Files.walk(projectPath)
+                .filter(Files::isRegularFile)
+                .filter(p -> p.toString().endsWith(".java"))
+                .forEach(p -> {
+                    try {
+                        int tlocValue = tloc.calculateTloc(p.toString());
+                        int tassertValue = tassert.calculateTassert(p.toString());
+                        double tcmp = tassertValue != 0 ? (double) tlocValue / tassertValue : 0;
+                        metricsList.add(new ClassMetrics(p, tlocValue, tassertValue, tcmp));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+        // Calculate threshold values
+        int tlocThreshold = getTlocPercentileValue(metricsList, ClassMetrics::getTloc, threshold);
+        System.out.println(tlocThreshold);
+        double tcmpThreshold = getTcmpPercentileValue(metricsList, ClassMetrics::getTcmp, threshold);
+        System.out.println(tcmpThreshold);
+
+        for (ClassMetrics metrics : metricsList) {
+            if (metrics.getTloc() >= tlocThreshold && metrics.getTcmp() >= tcmpThreshold) {
+                tls.processJavaFile(projectPath, metrics.getPath(), output);
+            }
+        }
     }
 	
+	private static int getTlocPercentileValue(List<ClassMetrics> metricsList, ToIntFunction<ClassMetrics> metricFunction, double percentile) {
+       
+    }
+
+    private static double getTcmpPercentileValue(List<ClassMetrics> metricsList, ToDoubleFunction<ClassMetrics> metricFunction, double percentile) {
+        
+    }
 	
 	private static class ClassMetrics {
         private final Path path;
