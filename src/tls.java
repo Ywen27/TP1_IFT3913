@@ -41,14 +41,14 @@ public class tls {
 
         int tlocValue = 0;
         try {
-            tlocValue = tloc.calculateTloc(path.toFile().getAbsolutePath());
+            tlocValue = tloc.calculateTloc(path.toFile().toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         int tassertValue = 0;
         try {
-            tassertValue = tassert.calculateTassert(path.toFile().getAbsolutePath());
+            tassertValue = tassert.calculateTassert(path.toFile().toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
