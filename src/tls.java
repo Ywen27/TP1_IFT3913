@@ -35,7 +35,7 @@ public class tls {
     }
 
     private static void processJavaFile(Path startPath, Path path, PrintStream output) {
-        String relativePath = "./" + startPath.relativize(path).toString();
+        String relativePath = ".\\" + startPath.relativize(path).toString();
         String className = path.getFileName().toString().replace(".java", "");
         String packageName = computePackageName(startPath, path);
 
