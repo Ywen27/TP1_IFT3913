@@ -47,9 +47,7 @@ public class tropcomp {
 
         // Calculate threshold values
         int tlocThreshold = getTlocPercentileValue(metricsList, ClassMetrics::getTloc, threshold);
-        System.out.println(tlocThreshold);
         double tcmpThreshold = getTcmpPercentileValue(metricsList, ClassMetrics::getTcmp, threshold);
-        System.out.println(tcmpThreshold);
 
         for (ClassMetrics metrics : metricsList) {
             if (metrics.getTloc() >= tlocThreshold && metrics.getTcmp() >= tcmpThreshold) {
