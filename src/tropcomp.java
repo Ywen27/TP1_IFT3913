@@ -59,11 +59,21 @@ public class tropcomp {
     }
 	
 	private static int getTlocPercentileValue(List<ClassMetrics> metricsList, ToIntFunction<ClassMetrics> metricFunction, double percentile) {
-       
+		 return metricsList.stream()
+	                .mapToInt(metricFunction)
+	                .sorted()
+	                .skip((long) (metricsList.size() * (1 - percentile / 100.0)))
+	                .findFirst()
+	                .orElse(0);
     }
 
     private static double getTcmpPercentileValue(List<ClassMetrics> metricsList, ToDoubleFunction<ClassMetrics> metricFunction, double percentile) {
-        
+    	return metricsList.stream()
+                .mapToDouble(metricFunction)
+                .sorted()
+                .skip((long) (metricsList.size() * (1 - percentile / 100.0)))
+                .findFirst()
+                .orElse(0.0);
     }
 	
 	private static class ClassMetrics {
