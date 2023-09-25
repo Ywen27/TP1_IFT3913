@@ -21,28 +21,26 @@ public class tassert {
     }
 
     public static int calculateTassert(String filePath) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            int tassert = 0;
-            boolean inCommentBlock = false;
+        // Liste des méthodes d'assertion couramment utilisées dans JUnit
+        String[] assertionMethods = {
+                "assertEquals", "assertNotEquals", "assertFalse", "assertThrows", "fail",
+                "assertTrue", "assertNotNull", "assertNull", "assertSame",
+                "assertNotSame", "assertArrayEquals"
+        };
 
+        Pattern pattern = Pattern.compile("\\b(" + String.join("|", assertionMethods) + ")\\b");
+
+        int count = 0;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                line = line.trim();
-
-                if (line.startsWith("/*")) {
-                    inCommentBlock = true;
-                }
-
-                if (!line.isEmpty() && line.contains("assert") && !line.startsWith("//") && !inCommentBlock) {
-                    tassert++;
-                }
-
-                if (line.endsWith("*/")) {
-                    inCommentBlock = false;
+                if (pattern.matcher(line).find()) {
+                    count++;
                 }
             }
-
-            return tassert;
         }
+
+        return count;
     }
 }
