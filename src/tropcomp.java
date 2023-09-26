@@ -46,8 +46,8 @@ public class tropcomp {
                 });
 
         // Calculate threshold values
-        int tlocThreshold = getTlocPercentileValue(metricsList, ClassMetrics::getTloc, threshold);
-        double tcmpThreshold = getTcmpPercentileValue(metricsList, ClassMetrics::getTcmp, threshold);
+        int tlocThreshold = getTlocThresholdValue(metricsList, ClassMetrics::getTloc, threshold);
+        double tcmpThreshold = getTcmpThresholdValue(metricsList, ClassMetrics::getTcmp, threshold);
 
         for (ClassMetrics metrics : metricsList) {
             if (metrics.getTloc() >= tlocThreshold && metrics.getTcmp() >= tcmpThreshold) {
@@ -56,7 +56,7 @@ public class tropcomp {
         }
     }
 	
-	private static int getTlocPercentileValue(List<ClassMetrics> metricsList, ToIntFunction<ClassMetrics> metricFunction, double percentile) {
+	private static int getTlocThresholdValue(List<ClassMetrics> metricsList, ToIntFunction<ClassMetrics> metricFunction, double percentile) {
 		 return metricsList.stream()
 	                .mapToInt(metricFunction)
 	                .sorted()
@@ -65,7 +65,7 @@ public class tropcomp {
 	                .orElse(0);
     }
 
-    private static double getTcmpPercentileValue(List<ClassMetrics> metricsList, ToDoubleFunction<ClassMetrics> metricFunction, double percentile) {
+    private static double getTcmpThresholdValue(List<ClassMetrics> metricsList, ToDoubleFunction<ClassMetrics> metricFunction, double percentile) {
     	return metricsList.stream()
                 .mapToDouble(metricFunction)
                 .sorted()
