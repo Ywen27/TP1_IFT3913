@@ -7,6 +7,7 @@ import java.util.function.ToDoubleFunction;
 public class tropcomp {
 	
 	public static void main(String[] args) throws Exception {
+        // verification des arguments
 		if (args.length < 2 || args.length > 4 || (args.length == 3 && !args[0].equals("-o"))) {
             System.out.println("Usage: java tropcomp [-o <path_to_output_file.csv>] <path_to_maven_project> " +
                     "<threshold_percentage>");
@@ -15,6 +16,8 @@ public class tropcomp {
 
         String outputPath = null;
         int inputIndex = 0;
+
+        // verification de l'argument optionnel -o
         if (args[0].equals("-o")) {
             outputPath = args[1];
             inputIndex = 2;
@@ -30,7 +33,7 @@ public class tropcomp {
 	private static void processProject(Path projectPath, double threshold, PrintStream output) throws Exception {
 		List<ClassMetrics> metricsList = new ArrayList<>();
 		
-		// Gather metrics for all test files
+		// rassembler les métriques pour tous les fichiers test
         Files.walk(projectPath)
                 .filter(Files::isRegularFile)
                 .filter(p -> p.toString().endsWith(".java"))
@@ -45,10 +48,11 @@ public class tropcomp {
                     }
                 });
 
-        // Calculate threshold values
+        // calcul des valeurs des seuils
         int tlocThreshold = getTlocThresholdValue(metricsList, ClassMetrics::getTloc, threshold);
         double tcmpThreshold = getTcmpThresholdValue(metricsList, ClassMetrics::getTcmp, threshold);
 
+        // selection et traitement des fichiers
         for (ClassMetrics metrics : metricsList) {
             if (metrics.getTloc() >= tlocThreshold && metrics.getTcmp() >= tcmpThreshold) {
                 tls.processJavaFile(projectPath, metrics.getPath(), output);
@@ -56,6 +60,7 @@ public class tropcomp {
         }
     }
 	
+    // calcul du seuil pour tloc
 	private static int getTlocThresholdValue(List<ClassMetrics> metricsList, ToIntFunction<ClassMetrics> metricFunction, double percentile) {
 		 return metricsList.stream()
 	                .mapToInt(metricFunction)
@@ -65,6 +70,7 @@ public class tropcomp {
 	                .orElse(0);
     }
 
+    // calcul du seuil pour tcmp
     private static double getTcmpThresholdValue(List<ClassMetrics> metricsList, ToDoubleFunction<ClassMetrics> metricFunction, double percentile) {
     	return metricsList.stream()
                 .mapToDouble(metricFunction)
@@ -74,6 +80,7 @@ public class tropcomp {
                 .orElse(0.0);
     }
 	
+    // classe pour stocker les métriques
 	private static class ClassMetrics {
         private final Path path;
         private final int tloc;

@@ -5,6 +5,7 @@ import java.io.IOException;
 public class tloc {
 
     public static void main(String[] args) {
+        // Vérification des arguments
         if (args.length != 1) {
             System.out.println("Usage: java tloc <path_to_java_file>");
             System.exit(1);
@@ -19,6 +20,7 @@ public class tloc {
         }
     }
 
+    // Calcul du nombre de lignes de code dans le fichier (hors commentaires)
     public static int calculateTloc(String filePath) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             int tloc = 0;
@@ -26,16 +28,19 @@ public class tloc {
 
             String line;
             while ((line = reader.readLine()) != null) {
-                line = line.trim();
+                line = line.trim(); // Suppression des espaces en début et fin de ligne
 
+                // si la ligne commence par un bloc de commentaire
                 if (line.startsWith("/*")) {
                     inCommentBlock = true;
                 }
 
+                // si ligne pas vide et n'est pas un commentaire
                 if (!line.isEmpty() && !line.startsWith("//") && !inCommentBlock) {
                     tloc++;
                 }
 
+                // si la ligne termine par un bloc de commentaire
                 if (line.endsWith("*/")) {
                     inCommentBlock = false;
                 }
