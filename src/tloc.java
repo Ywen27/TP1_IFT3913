@@ -30,19 +30,36 @@ public class tloc {
             while ((line = reader.readLine()) != null) {
                 line = line.trim(); // Suppression des espaces en début et fin de ligne
 
-                // si la ligne commence par un bloc de commentaire
+                // commentaires multi-lignes
+                if (inCommentBlock) {
+                    if (line.contains("*/")) {
+                        inCommentBlock = false;
+                        line = line.substring(line.indexOf("*/") + 2);
+                    } else {
+                        continue; // Ignorer le reste de la ligne
+                    }
+                }
+
+                // commentaires en ligne
+                int lineCommentIndex = line.indexOf("//");
+                if (lineCommentIndex != -1) {
+                    line = line.substring(0, lineCommentIndex); // Ignorer le commentaire en ligne
+                }
+
+                // débuts de commentaires multi-lignes
                 if (line.startsWith("/*")) {
                     inCommentBlock = true;
+                    if (line.contains("*/")) {
+                        inCommentBlock = false;
+                        line = line.substring(line.indexOf("*/") + 2);
+                    } else {
+                        continue; // ignorer le reste de la ligne
+                    }
                 }
 
-                // si ligne pas vide et n'est pas un commentaire
-                if (!line.isEmpty() && !line.startsWith("//") && !inCommentBlock) {
+                // Vérifier si la ligne n'est pas vide après avoir pris en compte les commentaires
+                if (!line.isEmpty()) {
                     tloc++;
-                }
-
-                // si la ligne termine par un bloc de commentaire
-                if (line.endsWith("*/")) {
-                    inCommentBlock = false;
                 }
             }
 
