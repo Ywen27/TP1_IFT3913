@@ -43,7 +43,6 @@ Exemple d'utilisation:
 >java -jar tropcomp.jar jfreechart/src/test 10
 et retourne :
 .\java\org\jfree\chart\renderer\category\BoxAndWhiskerRendererTest.java, java.org.jfree.chart.renderer.category, BoxAndWhiskerRendererTest, 307, 40, 7.68
-.\java\org\jfree\chart\swing\ChartPanelTest.java, java.org.jfree.chart.swing, ChartPanelTest, 216, 23, 9.39
 .\java\org\jfree\data\time\YearTest.java, java.org.jfree.data.time, YearTest, 328, 47, 6.98
 Ou si on veut conserver le résultat dans un fichier csv, on a :
 java -jar tropcomp.jar -o <chemin-à-la-sortie.csv> <chemin-de-l'entrée> <seuil>
