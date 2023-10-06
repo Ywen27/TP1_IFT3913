@@ -1,6 +1,6 @@
 Nous avons obtenu comme résultat 2 fichiers pour le seuil 10% et aucun fichier pour les seuils 5 et 1%. On remarque donc qu'on a seulement 
-2 fichier sur environ 360 qui sont dans les 10%. Cela montre donc que l'heuristique de tropcomp est très stricte car on a obtenu très peu de 
-fichiers considérés comme problématique. Elle considère donc que nos fichiers java ne sont majoritairement (à 99,17%) pas complexe. On pourrait donc 
+2 fichiers sur environ 360 qui sont dans les 10%. Cela montre donc que l'heuristique de tropcomp est très stricte car on a obtenu très peu de 
+fichiers considérés comme problématique. Elle considère donc que nos fichiers java ne sont majoritairement (à 99,44%) pas complexe. On pourrait donc 
 se dire que l'heuristique de tropcomp n'est pas très pertinente ou du moins un peu trop conservatrice.
 Pour améliorer cela, on pourrait adapter le seuil selon notre but/besoin en fonction du type de projet. Si un projet a une base de code complexe, 
 on pourrait élever le seuil comme dans notre cas actuel sinon l'adapter en fonction des besoins.
